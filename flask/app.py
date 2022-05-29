@@ -18,7 +18,7 @@ def hello_world():
 
 @app.route("/flask/heavy")
 def accept_heavy_task_request():
-    sleep_time = randint(20, 30)
+    sleep_time = randint(1, 3)
     new_task = do_heavy_task.delay(sleep_time)
     return json_response({"message": f"Started task with id {new_task.id}"})
 
