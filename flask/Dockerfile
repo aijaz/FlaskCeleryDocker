@@ -5,5 +5,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir app
 COPY . app
-CMD ["gunicorn", "-w 4", "-b 0.0.0.0:8001", "app.app:app"]
+RUN cd app
+CMD ["/app/cmd.sh"]
 EXPOSE 8001
