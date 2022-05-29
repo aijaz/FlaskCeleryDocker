@@ -1,8 +1,7 @@
 #!/bin/bash
 
 set -e
-/bin/rm db/backend.db
-echo "" > db/backend.db
+echo "delete from celery_taskmeta; delete from celery_tasksetmeta;" | sqlite3 db/backend.db
 
 for f in flask nginx rabbitmq;
   do
