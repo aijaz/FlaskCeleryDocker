@@ -12,9 +12,9 @@ for f in flask nginx rabbitmq;
 
 
 
-docker network create --driver bridge aijaz_network || true
+docker network create --driver bridge my_network || true
 
-docker run -d -it --name aijaz_rabbitmq_container -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network aijaz_network aijaz_rabbitmq
-docker run -d -it --name aijaz_flask_container    -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network aijaz_network aijaz_flask
-docker run -d -it --name aijaz_celery_container   -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network aijaz_network aijaz_celery
-docker run -d -it --name aijaz_nginx_container    -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network aijaz_network -p 8000:80 aijaz_nginx
+docker run -d -it --name my_rabbitmq_container -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network my_network my_rabbitmq
+docker run -d -it --name my_flask_container    -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network my_network my_flask
+docker run -d -it --name my_celery_container   -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network my_network my_celery
+docker run -d -it --name my_nginx_container    -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network my_network -p 8000:80 my_nginx

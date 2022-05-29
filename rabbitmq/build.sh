@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t aijaz_rabbitmq .
+docker build -t my_rabbitmq .

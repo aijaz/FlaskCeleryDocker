@@ -7,7 +7,7 @@ from celery import Celery
 from celery.result import AsyncResult
 
 app = Flask(__name__)
-celery = Celery(broker="amqp://aijaz_rabbitmq_container//", backend='db+sqlite:///db/backend.db')
+celery = Celery(broker="amqp://my_rabbitmq_container//", backend='db+sqlite:///db/backend.db')
 
 
 @app.route("/flask")

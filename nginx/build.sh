@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t aijaz_nginx .
+docker build -t my_nginx .
