@@ -2,7 +2,6 @@ from random import randint
 from time import sleep
 import sqlite3
 
-
 from flask import Flask, jsonify,  request, current_app
 from celery import Celery
 from celery.result import AsyncResult
