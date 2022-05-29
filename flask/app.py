@@ -1,7 +1,9 @@
 from random import randint
 from time import sleep
+import sqlite3
 
-from flask import Flask, jsonify,  request
+
+from flask import Flask, jsonify,  request, current_app
 from celery import Celery
 from celery.result import AsyncResult
 
@@ -32,6 +34,20 @@ def status():
             return json_response({}, 404)
     return json_response({"error": "No task_id specified"})
 
+
+@app.route("/flask/tasks")
+def tasks():
+    con = sqlite3.connect('/db/backend.db')
+    con.row_factory = lambda cursor, row: {cursor.description[idx][0]: value for idx, value in enumerate(row)}
+    cur = con.cursor()
+    cur.execute('select task_id, status, date_done from celery_taskmeta')
+    rows = cur.fetchall()
+    for row in rows:
+        row['result'] = AsyncResult(row['task_id']).result
+    current_app.logger.info(rows)
+    cur.close()
+    con.close()
+    return json_response({"result": rows})
 
 @celery.task(name="heavy_task", bind=True)
 def do_heavy_task(self, sleep_time):
