@@ -3,7 +3,7 @@ from celery import Celery
 
 app = Flask(__name__)
 # celery = Celery(broker="amqp://aijaz_rabbitmq_container//", backend='db+postgresql://postgres:mysecretpassword@aijaz_postgres_container/postgres')
-celery = Celery(broker="amqp://aijaz_rabbitmq_container//")
+celery = Celery(broker="amqp://aijaz_rabbitmq_container//", backend='db+sqlite:///db/backend.sqlite')
 
 
 @app.route("/flask")
@@ -24,6 +24,4 @@ def list_uploads():
 
 @celery.task(name="heavy_task")
 def do_heavy_task():
-    with open("/document_root/baz", "w") as f:
-        f.write("This is a heavy task.")
     print("This is a heavy task")
