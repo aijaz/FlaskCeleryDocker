@@ -6,7 +6,14 @@ from flask import Flask, jsonify,  request, current_app
 from celery import Celery
 from celery.result import AsyncResult
 
+# The flask app
 app = Flask(__name__)
+
+# Celery also has a default convention of using 'app' as the celery app.
+# But we cannot do that here, because we're using 'app' to refer to the flask app.
+# Celery has a secondary convention of using 'celery' as the name of the celery app.
+# Create a celery app using the rabbitmq instance running on my_rabbitmq_container as the broker.
+# Use the SQLite3 database located at /db/backend.db as the Celery backend.
 celery = Celery(broker="amqp://my_rabbitmq_container//", backend='db+sqlite:///db/backend.db')
 
 
@@ -47,6 +54,7 @@ def tasks():
     cur.close()
     con.close()
     return json_response({"result": rows})
+
 
 @celery.task(name="heavy_task", bind=True)
 def do_heavy_task(self, sleep_time):

@@ -30,10 +30,12 @@ this online. One of the best ones out there is https://youtu.be/iwxzilyxTbQ.
 
 ## The standalone version
 
-+ `cd` into `flask`
-+ Run `pip3 install -r requirements.txt`
-+ Run `python3 ./standalone_app.py`. This will launch a web server listening on port 8080
-+ In another terminal start the celery worker
++ `cd` into `flask`.
++ Run `pip3 install -r requirements.txt` (You may want to use venv for this).
++ Install and run rabbitmq on your local computer.
+  + If you cannot/don't want to do this, then run the docker-based demo.
++ Run `python3 ./standalone_app.py`. This will launch a web server listening on port 8080.
++ In another terminal start the celery worker.
   - In the parent directory of `flask`, run `./start_local_celery.sh`
 + Now direct your browser to http://localhost:8080/flask/heavy.
   + This will kick off a celery task. You should be able to see the logs in the `start_local_celery.sh` output.
@@ -129,3 +131,12 @@ processed by Celery. End this load test quickly._**
 Once the load test is stopped, you can run `monitor_queues.sh` to view how quickly the 
 queue is processed. You can speed up the processing of the queue by adding more celery workers
 via `launch_celery_worker.sh`.
+
+### Task Status
+
+When you visit http://localhost:8000/flask/heavy the Flask server returns a JSON object
+that includes the task id. You can use this task id to query the status of the task using 
+http://localhost:8000/flask/status?task_id=xxxxx where `xxxxx` is the task id returned by
+`/flask/heavy`.
+
+You can retrieve a list of all tasks by visiting http://localhost:8000/flask/tasks.
