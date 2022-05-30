@@ -95,3 +95,33 @@ sequenceDiagram
     C2->>R: <get next task>
 
 ```
+
+### Starting the demo
+
+From the main directory run `build.sh`. This will do the following:
+
+- Create the flask, nginx, celery and rabbitmq images
+- Create the bridge network
+- Launch each container, assigning it to the the bridge network and giving it a known container name.
+
+### Runing the demo
+
+From your browser, visit http://localhost:8000/flask/heavy. This will enqueue a task that takes
+between 1 and 3 seconds to complete.
+
+You can view the Celery worker logs by running `docker logs -f my_celery_container`.
+
+You can view the list of tasks in the RabbitMQ queue (that aren't picked up by a worker yet) by
+running `list_queues.sh`.
+
+You can have this list of tasks updated approxmiately every two seconds by running `monitor_queue.sh`. 
+
+You can launch a [Locust](https://locust.io/) swarm of load-testing requests by doing the following:
+
+1. `cd locust`
+2. `./locust --host http://localhost:8000/`
+3. Visit http://localhost:8089
+4. Start a load test with 2 - 3 users, and a swarm rate of 1 - 4.
+
+**_Bear in mind that within minutes you will have queued tens of thousands of requests to be
+processed by Celery. End this load test quickly._**
