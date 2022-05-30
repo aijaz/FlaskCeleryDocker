@@ -81,9 +81,17 @@ purposes of this demo.
 ```mermaid
 
 sequenceDiagram
-    participant A as Alice
-    participant J as John
-    A->>J: Hello John, how are you?
-    J->>A: Great!
+    participant B as Browser
+    participant N as Nginx
+    participant F as Flask
+    participant R as RabbitMQ
+    participant C1 as Celery Worker 1
+    participant C2 as Celery Worker 2
+    
+    B->>N: /flask/heavy
+    N->>F: /flask/heavy (via gunicorn)
+    F->>R: do_heavy_task.delay()
+    C1->>R: <get next task>
+    C2->>R: <get next task>
 
 ```
