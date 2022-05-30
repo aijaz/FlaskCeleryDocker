@@ -104,7 +104,7 @@ From the main directory run `build.sh`. This will do the following:
 - Create the bridge network
 - Launch each container, assigning it to the the bridge network and giving it a known container name.
 
-### Runing the demo
+### Running the demo
 
 From your browser, visit http://localhost:8000/flask/heavy. This will enqueue a task that takes
 between 1 and 3 seconds to complete.
@@ -125,3 +125,7 @@ You can launch a [Locust](https://locust.io/) swarm of load-testing requests by 
 
 **_Bear in mind that within minutes you will have queued tens of thousands of requests to be
 processed by Celery. End this load test quickly._**
+
+Once the load test is stopped, you can run `monitor_queues.sh` to view how quickly the 
+queue is processed. You can speed up the processing of the queue by adding more celery workers
+via `launch_celery_worker.sh`.
