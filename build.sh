@@ -13,10 +13,14 @@ for f in flask nginx rabbitmq;
     popd || exit 1
   done
 
-# create a docker network named my_network if one doesn't already exist
+# Create a docker network named my_network if one doesn't already exist.
 docker network create --driver bridge my_network || true
 
-# create and launch the four docker containers
+# Create and launch the four docker containers.
+#
+# TECHNICALLY we don't need the -it options here. I include them anyway because
+# having them means that the output of docker logs is colorized.
+
 docker run -d -it --name my_rabbitmq_container -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network my_network my_rabbitmq
 docker run -d -it --name my_flask_container    -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network my_network my_flask
 docker run -d -it --name my_celery_container   -v "$(pwd)"/document_root:/document_root -v "$(pwd)"/db:/db --network my_network my_celery
