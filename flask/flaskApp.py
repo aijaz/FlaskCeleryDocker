@@ -15,10 +15,10 @@ def accept_heavy_task_request():
     return {"result": task.task_id}
 
 
-@celery.task(name="heavy_task")
-def do_heavy_task(sleep_time):
+@celery.task(name="heavy_task", bind=True)
+def do_heavy_task(self, sleep_time):
     sleep(sleep_time)
-    return f"This task took {sleep_time} seconds."
+    return f"This task ({self.request.id}) took {sleep_time} seconds."
 
 
 if __name__ == "__main__":
