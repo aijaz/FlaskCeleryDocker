@@ -26,7 +26,7 @@ There are two demos (sets of sample code) in this project:
 This repo does not attempt to explain _why_ one would want to use Celery with Flask. Or what the pros 
 and cons are when using RabbitMQ vs Redis. Or what purpose backends serve. This repo is to be used
 as part of a one-hour demo/explanation of concepts. There are several good articles and videos about
-this online. One of the best ones out there is https://youtu.be/iwxzilyxTbQ.
+this online. One of the best ones out there is [this video][vid].
 
 ## The standalone version
 
@@ -50,7 +50,7 @@ There are four Docker containers in this system:
    1. Any request with the `/flask` URL prefix is proxied to the `flask` container
 2. The `flask` container hosts the [Flask](https://flask.palletsprojects.com/en/2.1.x/) app. This is done via the [gunicorn HTTP server](https://gunicorn.org/).
 3. The `rabbitmq` container runs [RabbitMQ](https://www.rabbitmq.com/) which is used as Celery's broker.
-4. The `celery` container runs a [Celery](https://docs.celeryq.dev/) worker. One key point of this demo is that once can launch additional celery containers to speed up processing of the queue.
+4. The `celery` container runs a [Celery](https://docs.celeryq.dev/) worker. One key point of this demo is that one can launch additional celery containers to speed up processing of the queue.
 
 ### The container network
 
@@ -140,3 +140,5 @@ http://localhost:8000/flask/status?task_id=xxxxx where `xxxxx` is the task id re
 `/flask/heavy`.
 
 You can retrieve a list of all tasks by visiting http://localhost:8000/flask/tasks.
+
+[vid]: https://youtu.be/iwxzilyxTbQ
