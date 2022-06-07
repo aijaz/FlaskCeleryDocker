@@ -90,8 +90,8 @@ sequenceDiagram
     participant C1 as Celery Worker 1
     participant C2 as Celery Worker 2
     
-    B->>N: /flask/heavy
-    N->>F: /flask/heavy (via gunicorn)
+    B->>N: /
+    N->>F: / (via gunicorn)
     F->>R: do_heavy_task.delay()
     C1->>R: <get next task>
     C2->>R: <get next task>
